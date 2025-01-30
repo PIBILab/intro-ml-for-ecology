@@ -14,7 +14,8 @@ install.packages("randomForest")
 install.packages("e1071")       
 install.packages("kernlab")     
 install.packages("ggplot2")     
-install.packages("gbm")         
+install.packages("gbm")  
+install.packages("openxlsx")  
 library(caret)
 library(e1071)
 library(rpart)
@@ -23,6 +24,7 @@ library(e1071)
 library(kernlab)
 library(ggplot2)
 library(gbm)
+library(openxlsx)
 
 # -------------------------------------------------------------------------
 
