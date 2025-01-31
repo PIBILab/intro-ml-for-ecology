@@ -17,4 +17,4 @@ Image classification using machine learning algorithms
 
 3. Neural networks 
 
-Note: The description of the scripts, functions, and data are given in Report.pdf(documentation).
+Note: The description of the scripts, functions, and data are given in Report.pdf (documentation).
