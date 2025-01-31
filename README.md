@@ -13,8 +13,8 @@ Classification and regression
 
 2. Pixel classification 
 
-Simple supervised classification
+Image classification using machine learning algorithms
 
 3. Neural networks 
 
-Note:
+Note: The description of the scripts, functions, and data are given in Report.pdf(documentation).
