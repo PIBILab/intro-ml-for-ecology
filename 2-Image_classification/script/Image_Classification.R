@@ -1,90 +1,104 @@
+#' Dr. Eduardo Vinicius da Silva Oliveira
+#' PIBILab  - UFS
+#' https://github.com/PIBILab/intro-ml-for-ecology
+##################################################################
+#' Image classification using machine learning algorithms
 
+# -------------------------------------------------------------------------
+# Packages
 
-
-
+install.packages("raster")  
+install.packages("terra")       
+install.packages("randomForest")
+install.packages("rasterVis")       
 library(raster)
+library(terra)
+library(rasterVis)
+library(randomForest)
 
-# Load the TIFF image
-image <- raster::brick("AJUBrazil.tif")
+# -------------------------------------------------------------------------
 
-plot(image)
+###
+#' K-Means Clustering for Image Classification 
+#' Unsupervised learning algorithm
 
-# Convert the image to a data frame
-pixel_data <- as.data.frame(raster::rasterToPoints(image))
+# Load the image
+im<-raster::brick("https://github.com/PIBILab/intro-ml-for-ecology/raw/main/2-Image_classification/data/AjuBrazil.tif")
 
-# Rename columns (optional)
-names(pixel_data) <- c("x", "y", paste0("band", 1:(ncol(pixel_data) - 2)))
+plot(im)
 
-# Set the number of clusters (e.g., 5)
+# Convert to a data frame
+pix_data <- as.data.frame(raster::rasterToPoints(im))
+
+# Rename columns
+names(pix_data) <- c("x", "y", paste0("band", 1:(ncol(pix_data) - 2)))
+
+# Set the number of clusters
 num_clusters <- 5
 
 # Perform k-means clustering
-set.seed(123)  # For reproducibility
-kmeans_result <- kmeans(pixel_data[, 3:ncol(pixel_data)], centers = num_clusters)
+set.seed(123)  
+kmeans_resu <- kmeans(pix_data[, 3:ncol(pix_data)], centers = num_clusters)
 
 # Add cluster labels to the data frame
-pixel_data$cluster <- kmeans_result$cluster
+pix_data$cluster <- kmeans_resu$cluster
 
-# Create a raster from the clustered data
-cluster_raster <- raster::rasterFromXYZ(pixel_data[, c("x", "y", "cluster")])
+# Create a raster 
+clust_raster <- raster::rasterFromXYZ(pix_data[, c("x", "y", "cluster")])
 
 # Save the clustered image
-raster::writeRaster(cluster_raster, "clustered_image.tif", format = "GTiff",overwrite=TRUE)
-
-plot(cluster_raster)
-
-library(rasterVis)
+raster::writeRaster(clust_raster, "clust_image.tif", format = "GTiff",overwrite=TRUE)
 
 # Plot the clustered image
-rasterVis::levelplot(cluster_raster, main = "Clustered Image")
+plot(clust_raster)
+rasterVis::levelplot(clust_raster, main = "Clustered Image")
 
 
+###
+#' Image Classification and Recognition Based Random Forest Algorithm
+#' Semi-Supervised Classification
 
-#Semi-Supervised Classification
+im<-raster::brick("https://github.com/PIBILab/intro-ml-for-ecology/raw/main/2-Image_classification/data/AjuBrazil.tif")
 
-image <- raster::brick("AJUBrazil.tif")
+plot(im)
 
-plot(image)
-
-# Example: Manually labeled pixels
-labeled_data <- data.frame(
-  x = c(713130, 713026, 714099,714984,712308,713733,714067,712971,715733),  # Example x-coordinates
-  y = c(8788055, 8786841, 8785013,8787986,8787806,8788969,8789536,8786467,8789243),    # Example y-coordinates
-  class = c("water", "vegetation", "land", "water", "vegetation", "land","water", "vegetation", "land")  # Example labels
+# Manually labeled pixels
+lab_data <- data.frame(
+  x = c(713130, 713026, 714099,714984,712308,713733,714067,712971,715733),  
+  y = c(8788055, 8786841, 8785013,8787986,8787806,8788969,8789536,8786467,8789243),    
+  class = c("water", "vegetation", "land", "water", "vegetation", "land","water", "vegetation", "land")  
 )
 
 # Extract pixel values for the labeled coordinates
-labeled_data <- cbind(labeled_data, raster::extract(image, labeled_data[, c("x", "y")]))
+lab_data <- cbind(lab_data, raster::extract(im, lab_data[, c("x", "y")]))
 
-# Check the structure of your data
-str(labeled_data)
-
-# If 'class' is not a factor, convert it
-labeled_data$class <- as.factor(labeled_data$class)
-
-library(randomForest)
+# Convert 'class' in a factor
+lab_data$class <- as.factor(lab_data$class)
 
 # Train the model
-rf_model <- randomForest(class ~ ., data = labeled_data, ntree = 500, importance = TRUE)
+rf_model <- randomForest(class ~ ., data = lab_data, ntree = 500, importance = TRUE)
 
 # Prepare the full image data for prediction
-full_image_data <- as.data.frame(raster::rasterToPoints(image))
+full_im_data <- as.data.frame(raster::rasterToPoints(im))
 
 # Predict classes for the entire image
-full_image_data$predicted_class <- predict(rf_model, full_image_data)
+full_im_data$predicted_class <- predict(rf_model, full_im_data)
 
-# Step 1: Create a mapping of class labels to numeric values
-class_mapping <- c("water" = 1, "vegetation" = 2, "land" = 3)
+# Create a mapping of class labels to numeric values
+class_map <- c("water" = 1, "vegetation" = 2, "land" = 3)
 
-# Step 2: Convert the predicted_class column to numeric using the mapping
-full_image_data$predicted_class_numeric <- class_mapping[full_image_data$predicted_class]
+# Convert the predicted_class column to numeric 
+full_im_data$predicted_class_num <- class_map[full_im_data$predicted_class]
 
 # Convert the predictions back to a raster
-predicted_raster <- raster::rasterFromXYZ(full_image_data[, c("x", "y", "predicted_class_numeric")])
+pred_raster <- raster::rasterFromXYZ(full_im_data[, c("x", "y", "predicted_class_num")])
 
-plot(predicted_raster)
+plot(pred_raster)
 
 # Save the classified image
-raster::writeRaster(predicted_raster, "classified_image.tif", format = "GTiff",overwrite=TRUE)
+raster::writeRaster(pred_raster, "classified_image.tif", format = "GTiff",overwrite=TRUE)
 
-
+rm(list = ls(all.names = TRUE)) #Clear all objects 
+gc() #Report the memory usage
+# end
+######################################################################################################################################
