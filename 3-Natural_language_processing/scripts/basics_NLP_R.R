@@ -24,7 +24,7 @@ library(e1071)
 #' Search for mentions of species functional traits 
 
 # Defining the directory
-pdfs <- "C:/Users/sidfg/OneDrive/Documentos/Eduardo Oliveira/R_analises/ML_PIBILab/pdfs"
+pdfs <- "C:/Users/path_to_folder/data"#see example in data folder 
 
 # List all files in folder
 files_pdf <- list.files(pdfs, pattern = "\\.pdf$", full.names = TRUE)
@@ -32,6 +32,9 @@ files_pdf <- list.files(pdfs, pattern = "\\.pdf$", full.names = TRUE)
 # Defining the species and functional traits
 spp <- "Bertholletia excelsa"  
 att <- c("wood density", "seed size", "lifespan")
+
+# Load function
+source("https://github.com/PIBILab/intro-ml-for-ecology/raw/main/3-Natural_language_processing/functions/seek_att.R")
 
 # Processing the pdf files
 resu <- data.frame(
