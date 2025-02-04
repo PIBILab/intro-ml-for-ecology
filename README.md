@@ -19,4 +19,8 @@ Image classification using Machine Learning algorithms
 
 Brief introduction to the Natural Language Processing 
 
+4. Species distribution modelling
+
+Species distribution modelling using Machine Learning algorithms
+
 Note: The description of the scripts, functions, and data are given in Report.pdf (documentation).
