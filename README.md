@@ -15,6 +15,8 @@ Classification and regression
 
 Image classification using machine learning algorithms
 
-3. Neural networks 
+3. Natural language processing
+
+Brief introduction to the Natural language processing 
 
 Note: The description of the scripts, functions, and data are given in Report.pdf (documentation).
