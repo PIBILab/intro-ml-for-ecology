@@ -22,10 +22,9 @@ if(!require(openxlsx)) install.packages("openxlsx")
 
 ## Input data 
 
-data1<-read.xlsx("https://github.com/PIBILab/intro-ml-for-ecology/raw/main/1-Decision_trees/data/data_urb_affor.xlsx")
+occ_data<-read.xlsx("https://github.com/PIBILab/intro-ml-for-ecology/raw/main/4-Species_distribution_modelling/data/occurrence.xlsx")
 
-occ_data<-read.xlsx("occurrence.xlsx")
-vars<-read.xlsx("climatic_data.xlsx")
+vars<-read.xlsx("https://github.com/PIBILab/intro-ml-for-ecology/raw/main/4-Species_distribution_modelling/data/climatic_data.xlsx")
 
 ## Train and test data
 presence <- occ_data$presence
