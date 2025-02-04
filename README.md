@@ -13,10 +13,10 @@ Classification and regression
 
 2. Pixel classification 
 
-Image classification using machine learning algorithms
+Image classification using Machine Learning algorithms
 
 3. Natural language processing
 
-Brief introduction to the Natural language processing 
+Brief introduction to the Natural Language Processing 
 
 Note: The description of the scripts, functions, and data are given in Report.pdf (documentation).
