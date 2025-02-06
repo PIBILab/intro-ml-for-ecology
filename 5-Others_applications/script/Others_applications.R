@@ -25,7 +25,7 @@ library(openxlsx)
 #' Support vector machines 
  
 # Input data
-land<-read.xlsx("land_use.xlsx")
+land<-read.xlsx("https://github.com/PIBILab/intro-ml-for-ecology/raw/main/5-Others_applications/data/land_use.xlsx")
 
 land$class <- as.factor(land$class)
 
@@ -50,7 +50,7 @@ pred
 #' Random forest
 
 # Input data
-veg<-read.xlsx("vegetation_data.xlsx")
+veg<-read.xlsx("https://github.com/PIBILab/intro-ml-for-ecology/raw/main/5-Others_applications/data/vegetation_data.xlsx")
 
 # Train the model
 model_rf <- randomForest(carbon_stock ~ wood_density + height, data = veg)
@@ -67,7 +67,7 @@ pred
 #' Making predict according neighborhood
 
 # Input data
-land<-read.xlsx("land_use.xlsx")
+land<-read.xlsx("https://github.com/PIBILab/intro-ml-for-ecology/raw/main/5-Others_applications/data/land_use.xlsx")
 
 # Train data
 new_data <- data.frame(band_1 = c(160, 165), band_2 = c(115, 125))
@@ -82,13 +82,13 @@ print(pred)
 #' Data clustering
 
 # Input data
-data<-read.xlsx("climatic_data.xlsx")
+data<-read.xlsx("https://github.com/PIBILab/intro-ml-for-ecology/raw/main/5-Others_applications/data/climatic_data.xlsx")
 
 # Making K-means for two cluster
 model_kmeans <- kmeans(data, centers = 2)
 
 # View the clusters
-data$cluster <- as.factor(modelo_kmeans$cluster)
+data$cluster <- as.factor(model_kmeans$cluster)
 
 plot(data$temp, data$prec, col = data$cluster, pch = 16, xlab = "Temperature", ylab = "Precipitation")
 
