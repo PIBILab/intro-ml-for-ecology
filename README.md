@@ -25,6 +25,6 @@ Species distribution modelling using Machine Learning algorithms
 
 5. Others applications
 
-Support vector machines, Random forest, K-Nearest Neighbors, and K-means Clustering
+Support vector machines, Random forest, Boosting, Bagging, K-Nearest Neighbors, and K-means Clustering
  
 Note: The description of the scripts, functions, and data are given in Report.pdf (documentation).
